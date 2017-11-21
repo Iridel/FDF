@@ -1,4 +1,4 @@
-What I have so far:
+What I have so far: PLEASE READ THE RAW, it has the correct formatting
 
 NOTE: mallocing isn't correct, neither is the freeing, mostly is just a mess at this point but technically we dont need
 to handle error leaking in fdf. For now I'm leaving it until I can get the damn thing to work.
