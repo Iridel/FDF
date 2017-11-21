@@ -51,7 +51,7 @@ printstruct is there for error checking so you can look to see if the parsing is
 
 the idea is essentially that GNL will get the line so if you have this:
 
-0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0     This will be the first line it will get
+0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
 0  0 10 10  0  0 10 10  0  0  0 10 10 10 10 10  0  0  0
 0  0 10 10  0  0 10 10  0  0  0  0  0  0  0 10 10  0  0
@@ -74,9 +74,12 @@ So the array of structs (c_data or p_data) will always have 19 structs of the po
 first line. then when it gets the second line and the current one is placed in the previous data struct, it will draw the
 horizontal lines and then go through and draw the vertical by looking at the p_data, and drawing a line from p_data[i] to c_data[i] (0,0,0 to 0,1,0) down all the way till the end of the row.
 
-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0 -> 0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0
-                                      -> | | | | | | | | | | | | | | | | | | |
-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0 -> 0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0
+0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0 -> 
+0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0 ->
+
+0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0
+| | | | | | | | | | | | | | | | | | |
+0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0
 
 and repeat, though the logic on the drawing part isnt correct- if I do it all manually it is but if I use the draw_line function its not.
 
