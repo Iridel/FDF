@@ -83,6 +83,7 @@ void	draw_line(t_coord *a, t_coord *b, t_ini *view)
 		mlx_pixel_put(view->id, view->win, var.x, var.y, PRPL_R);
 		while (res >= 0)
 		{
+			res -= 2 * var.dx;
 			if (var.swap)
 				var.x += var.sx;
 			else
