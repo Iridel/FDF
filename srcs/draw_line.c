@@ -6,94 +6,79 @@
 /*   By: dhill <dhill@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 15:40:53 by dhill             #+#    #+#             */
-/*   Updated: 2017/11/20 17:45:56 by dhill            ###   ########.fr       */
+/*   Updated: 2017/11/27 23:52:19 by dhill            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void	draw_vertical(t_ini *var, t_coord *p_data, t_coord *c_data)
+void	draw(t_ini *var, t_coord **data)
 {
-	int	i;
-	int n;
+	int	h;
+	int w;
 
-	i = 0;
-	printf("Drawing vertical\n");
-	while (i < var->width)
+	h = 0;
+	w = 0;
+
+	while (h < var->height)
 	{
-		n = p_data[i].y;
-		while (n < c_data[i].y && p_data[i].x == c_data[i].x)
+		while (w < var->width)
 		{
-			mlx_pixel_put(var->id, var->win, p_data[i].x, n, PRPL_R);
-			n++;	
+			if (w < var->width - 1)
+				draw_line(&data[h][w], &data[h][w + 1], var);
+			if (h < var->height - 1)
+				draw_line(&data[h][w], &data[h + 1][w], var);
+			w++;
 		}
-		i++;
+		w = 0;
+		h++;
 	}
 }
 
-void	draw_horizontal(t_ini *var, t_coord *c_data)
+void	initalize_vb(t_draw *vb, t_coord *a, t_coord *b)
 {
-	int i;
-
-	i = 0;
-	printf("Drawing horizontal\n");
-	while (i < var->width)
-	{
-		draw_line(&c_data[i], &c_data[i + 1], var);
-		i++;
-	}
+	vb->i = 0;
+	vb->x = a->x;
+	vb->y = a->y;
+	vb->dx = abs(b->x - a->x);
+	vb->dy = abs(b->y - a->y);
+	vb->sx = ft_ispositive(b->x - a->x);
+	vb->sy = ft_ispositive(b->y - a->y);
+	vb->swap = 0;
 }
 
-int		abs_val(int n)
+void	draw_line(t_coord *a, t_coord *b, t_ini *var)
 {
-	return (n < 0 ? -n : n);
-}
-
-void	initalize_var(t_draw *var, t_coord *a, t_coord *b)
-{
-	var->i = 0;
-	var->x = a->x;
-	var->y = a->y;
-	var->dx = abs_val(b->x - a->x);
-	var->dy = abs_val(b->y - a->y);
-	var->sx = ft_ispositive(b->x - a->x);
-	var->sy = ft_ispositive(b->y - a->y);
-	var->swap = 0;
-}
-
-void	draw_line(t_coord *a, t_coord *b, t_ini *view)
-{
-	t_draw	var;
+	t_draw	vb;
 	int		tmp;
 	int		res;
 
-	printf("yes?\n");
-	initalize_var(&var, a, b);
-	if (var.dy > var.dx)
+	initalize_vb(&vb, a, b);
+	if (vb.dy > vb.dx)
 	{
-		tmp = var.dx;
-		var.dx = var.dy;
-		var.dy = tmp;
-		var.swap = 1;
-		printf("yes?\n");
+		tmp = vb.dx;
+		vb.dx = vb.dy;
+		vb.dy = tmp;
+		vb.swap = 1;
 	}
-	res = 2 * var.dy - var.dx;
-	while (var.i < var.dx)
+	res = 2 * vb.dy - vb.dx;
+	while (vb.i < vb.dx)
 	{
-		mlx_pixel_put(view->id, view->win, var.x, var.y, PRPL_R);
+		mlx_pixel_put(var->id, var->win, vb.x, vb.y, PRPL_R);
 		while (res >= 0)
 		{
-			res -= 2 * var.dx;
-			if (var.swap)
-				var.x += var.sx;
+			res -= 2 * vb.dx;
+			if (vb.swap)
+				vb.x += vb.sx;
 			else
-				var.y += var.sy;
+				vb.y += vb.sy;
 		}
-		res += 2 * var.dy;
-		if (var.swap)
-			var.y += var.sy;
+		res += 2 * vb.dy;
+		if (vb.swap)
+			vb.y += vb.sy;
 		else
-			var.x += var.sx;
-		var.i++;
+			vb.x += vb.sx;
+		vb.i++;
 	}
+	mlx_pixel_put(var->id, var->win, vb.x, vb.y, PRPL_R);
 }

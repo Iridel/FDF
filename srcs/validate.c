@@ -6,7 +6,7 @@
 /*   By: dhill <dhill@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/05 23:25:23 by dhill             #+#    #+#             */
-/*   Updated: 2017/11/20 13:56:11 by dhill            ###   ########.fr       */
+/*   Updated: 2017/11/25 23:51:25 by dhill            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int		checkw(char **curr)
 {
-	int	depth;
+	int	width;
 
-	depth = 0;
-	while (curr[depth] != '\0')
-		depth++;
-	return (depth);
+	width = 0;
+	while (curr[width] != '\0')
+		width++;
+	return (width);
 }
 
 void	check(char *s)
@@ -37,20 +37,12 @@ void	check(char *s)
 	}
 }
 
-void	validation(t_ini *var)
+void	validation(t_ini *var, t_values *val)
 {
-	int 	res;
-	int 	w2;
-	int 	i;
-	char	*line;
-
-	i = 0;
-	w2 = 0;
-	var->width = 0;
-	while ((res = get_next_line(var->fd, &line)) > 0)
+	while ((val->res = get_next_line(var->fd, &val->line)) > 0)
 	{
-		check(line);
-		if ((var->curr = ft_strsplit(line, ' ')) == NULL)
+		check(val->line);
+		if ((var->curr = ft_strsplit(val->line, ' ')) == NULL)
 			error("Error: Invalid file - No meaningful data.");
 		if (!var->width)
 		{
@@ -59,26 +51,35 @@ void	validation(t_ini *var)
 		}
 		else
 		{
-			w2 = checkw(var->curr);
-			if (w2 != var->width)
-				error("Error: Invalid file - Lines uneven.");
+			val->w2 = checkw(var->curr);
+			val->w2 != var->width ? error("Error: Invalid file - uneven") : 0;
 		}
-		free(var->curr); //needs to free each string else wont free right
-		free(line);
-		i++;
+		while (var->curr[val->i2])
+		{
+			free(var->curr[val->i2]);
+			val->i2++;
+		}
+		free(val->line);
+		val->i++;
 	}
-	var->height = i;
-	res == -1 ? error("GNL Error.") : 0;
-	res == 0 ? ft_putendl("File reading is finished.") : 0;
+	var->height = val->i;
+	val->res == -1 ? error("GNL Error.") : 0;
 }
 
 void	validate(char *av, t_ini *var)
 {
+	t_values	*val;
+
 	if (ft_strstr(av, ".fdf") == 0)
 		error("Error: File extention is not .fdf.");
 	if ((var->fd = open(av, O_RDONLY)) < 0)
 		error("Error: Opening Failed.");
-	validation(var);
+	var->width = 0;
+	val = (t_values *)malloc(sizeof(t_values));
+	val->i = 0;
+	val->i2 = 0;
+	val->w2 = 0;
+	validation(var, val);
 	close(var->fd);
 	var->fd = 0;
 }
