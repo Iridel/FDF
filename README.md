@@ -46,9 +46,12 @@ would be the virst value of the first point in the map.
 ### draw_line.c 
 starts with draw, then draw_line, and then initalize_vb
 ```
-draw takes the data and goes through each point and passes into draw_line the first point, and the second point
-draw_line initalizes its variables and then uses a generalized bresenham's algorithm to draw a line from point a to point b
-using their respective x, y, z values. Draw repeats this until the entire 'map' of data has been drawn.
+draw takes the data and goes through each point and
+passes into draw_line the first point, and the second point
+draw_line initalizes its variables and
+then uses a generalized bresenham's algorithm to draw a line from point a to point b
+using their respective x, y, z values.
+draw repeats this until the entire 'map' of data has been drawn.
 ```
 
 And that is the entire program, there are many maps in the maps folder to try out and the angle it is displayed at can be changed in the header by modifying A_X & A_Z.
