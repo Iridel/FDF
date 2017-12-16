@@ -6,13 +6,13 @@
 #    By: dhill <dhill@student.42.us.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/23 16:05:03 by dhill             #+#    #+#              #
-#    Updated: 2017/11/30 17:58:41 by dhill            ###   ########.fr        #
+#    Updated: 2017/12/04 21:14:02 by dhill            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
-FLAGS = -g -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 
 FILES = main.c validate.c parse.c draw_line.c
 
