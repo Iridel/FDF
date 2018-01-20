@@ -6,7 +6,7 @@
 /*   By: dhill <dhill@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 20:30:56 by dhill             #+#    #+#             */
-/*   Updated: 2017/12/15 18:04:41 by dhill            ###   ########.fr       */
+/*   Updated: 2017/12/04 20:52:18 by dhill            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@
 # include <math.h>
 # include <pthread.h>
 
-
-/*
-** Macros for my colors, window size, x and z degree of rotation, zoom,
-** and centering offset. Max just returns the highest of 2 integers.
-*/
 # define ORANGE		0x00f87014
 # define BLUE		0x003299ff
 # define WINE_R		0x00D40439
@@ -37,13 +32,6 @@
 # define CENTER_W	(W_SIZE/2) - (var->width * Z/2)
 # define CENTER_H	(W_SIZE/2) - (var->height * Z/2)
 
-/*
-** Structs: t_coord is coordinates for each point,
-** t_ini is all of my pointers, the fd, the width and height of the map,
-** name of fdf, current line, and the data parsed.
-** t_values is just variables used in the validation. t_draw is variables
-** for the drawing algorithm.
-*/
 typedef struct	s_coord
 {
 	int			x;
